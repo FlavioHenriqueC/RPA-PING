@@ -10,6 +10,10 @@ resultados = []
 for nome in df["Nome"]:
     comando = f'ping {nome}'  # exemplo de comando
     resultado = subprocess.run(comando, shell=True, capture_output=True, text=True)
+    
+    #output da saida de ping 
+    saida_ping = resultado.stdout
+    print(saida_ping)
 
     resultados.append([nome])
 
