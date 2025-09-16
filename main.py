@@ -2,21 +2,37 @@ import pandas as pd
 import subprocess
 import csv
 
-
-# comando que lê o arquivo
+# Lê o arquivo com os nomes das máquinas
 df = pd.read_csv("maquinas.csv", sep=";")
-resultados = []
-# Supondo que exista uma coluna chamada "nome"
+
+
+
+# Abre o arquivo CSV uma vez e escreve o cabeçalho
+with open("resultado.csv", "w", newline='', encoding="utf-8-sig") as arquivo:
+    escritor = csv.writer(arquivo)
+    escritor.writerow(["Maquina", "Status"])
+
+
+
+# Processa cada máquina
 for nome in df["Nome"]:
-    comando = f'ping {nome}'  # exemplo de comando
+    comando = f'ping -n 4 {nome}'  # 4 tentativas no Windows
     resultado = subprocess.run(comando, shell=True, capture_output=True, text=True)
+
+
     
-    #output da saida de ping 
+    # Verifica status
+    status = "Online" if resultado.returncode == 0 else "Offline"
+    
     saida_ping = resultado.stdout
     print(saida_ping)
+    print(f"Status: {status}")
 
-    resultados.append([nome])
 
-    df_resultados = pd.DataFrame(resultados, columns=["Maquina"])
+    # Adiciona linha ao arquivo CSV
 
-    df_resultados.to_csv("resultado.csv", index=False, encoding="utf-8-sig")
+    with open("resultado.csv", "a", newline='', encoding="utf-8-sig") as arquivo:
+        escritor = csv.writer(arquivo)
+        escritor.writerow([nome, status])
+
+print("Arquivo resultado.csv criado/atualizado com sucesso!")
