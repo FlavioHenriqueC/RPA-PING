@@ -7,10 +7,10 @@ df = pd.read_csv("maquinas.csv", sep=";")
 
 
 
-# Abre o arquivo CSV uma vez e escreve o cabeçalho
-with open("resultado.csv", "w", newline='', encoding="utf-8-sig") as arquivo:
-    escritor = csv.writer(arquivo)
-    escritor.writerow(["Maquina", "Status"])
+## Abre o arquivo CSV uma vez e escreve o cabeçalho
+##with open("resultado.csv", "w", newline='', encoding="utf-8-sig") as arquivo:
+    ##escritor = csv.writer(arquivo)
+    ##escritor.writerow(["Maquina", "Status"])
 
 
 
